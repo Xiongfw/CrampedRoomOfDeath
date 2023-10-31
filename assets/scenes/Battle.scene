@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 45
+      "__id__": 47
     },
     "_id": "3a7c0a29-4818-4c5c-abdd-5c06c58b8715"
   },
@@ -81,23 +81,23 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 41
-      },
-      {
-        "__id__": 42
-      },
-      {
         "__id__": 43
       },
       {
         "__id__": 44
+      },
+      {
+        "__id__": 45
+      },
+      {
+        "__id__": 46
       }
     ],
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 320,
-      "y": 960,
+      "y": 480.00000000000006,
       "z": 0
     },
     "_lrot": {
@@ -182,7 +182,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 960,
+    "_orthoHeight": 480,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -278,7 +278,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 640,
-      "height": 1920
+      "height": 960
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -381,7 +381,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -5.684341886080802e-14,
-      "y": -929.8,
+      "y": -449.8,
       "z": 0
     },
     "_lrot": {
@@ -419,7 +419,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 298.92578125,
+      "width": 298.9041448876342,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -452,7 +452,7 @@
     "_string": "Cramped Room Of Death Demo",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 20,
+    "_actualFontSize": 23.291666666666664,
     "_fontSize": 20,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -480,7 +480,7 @@
     "__prefab": null,
     "_alignFlags": 12,
     "_target": null,
-    "_left": 170.53710937499994,
+    "_left": 170.54792755618286,
     "_right": 176.65589361583184,
     "_top": 0,
     "_bottom": 5,
@@ -523,26 +523,29 @@
         "__id__": 30
       },
       {
-        "__id__": 34
+        "__id__": 35
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 38
-      },
-      {
         "__id__": 39
       },
       {
         "__id__": 40
+      },
+      {
+        "__id__": 41
+      },
+      {
+        "__id__": 42
       }
     ],
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -772.1569999999999,
+      "y": -292.1569999999999,
       "z": 0
     },
     "_lrot": {
@@ -1350,7 +1353,11 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 34
+      }
+    ],
     "_interactable": true,
     "_transition": 3,
     "_normalColor": {
@@ -1394,6 +1401,16 @@
     "_id": "f62ZTOnfJOB7h0dPDCVmbt"
   },
   {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 13
+    },
+    "component": "",
+    "_componentId": "f28c9IV41BG9ItTDaGNsz7J",
+    "handler": "handleCtrl",
+    "customEventData": ""
+  },
+  {
     "__type__": "cc.Node",
     "_name": "ControllerButton6",
     "_objFlags": 512,
@@ -1405,13 +1422,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 35
-      },
-      {
         "__id__": 36
       },
       {
         "__id__": 37
+      },
+      {
+        "__id__": 38
       }
     ],
     "_prefab": null,
@@ -1450,7 +1467,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 34
+      "__id__": 35
     },
     "_enabled": true,
     "__prefab": null,
@@ -1472,7 +1489,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 34
+      "__id__": 35
     },
     "_enabled": true,
     "__prefab": null,
@@ -1511,7 +1528,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 34
+      "__id__": 35
     },
     "_enabled": true,
     "__prefab": null,
@@ -1643,6 +1660,18 @@
     "_id": "e9W2jCYt1C0ZODQjwGh677"
   },
   {
+    "__type__": "f28c9IV41BG9ItTDaGNsz7J",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 13
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "67aJ4WCIBMM6W1OBqnDGw/"
+  },
+  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -1655,7 +1684,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 640,
-      "height": 1920
+      "height": 960
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1725,25 +1754,25 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 46
-    },
-    "shadows": {
-      "__id__": 47
-    },
-    "_skybox": {
       "__id__": 48
     },
-    "fog": {
+    "shadows": {
       "__id__": 49
     },
-    "octree": {
+    "_skybox": {
       "__id__": 50
     },
-    "skin": {
+    "fog": {
       "__id__": 51
     },
-    "lightProbeInfo": {
+    "octree": {
       "__id__": 52
+    },
+    "skin": {
+      "__id__": 53
+    },
+    "lightProbeInfo": {
+      "__id__": 54
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
