@@ -27,7 +27,7 @@ export class EventManager extends Singleton {
     const funs = this._eventDic.get(eventName);
     if (funs) {
       funs.forEach(({ fun, context }) => {
-        fun.apply(context, data);
+        fun.call(context, data);
       });
     }
   }
