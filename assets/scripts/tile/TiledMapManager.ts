@@ -14,6 +14,7 @@ import levels from '../level';
 import { TileManager } from './TileManager';
 import { createUINode } from '../utils';
 import { DataManager } from '../runtime/DataManager';
+import { ResourceManager } from '../runtime/ResourceManager';
 const { ccclass } = _decorator;
 
 @ccclass('TiledMapManager')
@@ -24,7 +25,7 @@ export class TiledMapManager extends Component {
 
   async init() {
     const { mapInfo } = DataManager.instance;
-    const spriteFrames = await this.loadSpriteFrames();
+    const spriteFrames = await ResourceManager.instance.loadSpriteFrames('/texture/tile');
     for (let i = 0; i < mapInfo.length; i++) {
       const column = mapInfo[i];
       for (let j = 0; j < column.length; j++) {
@@ -52,18 +53,6 @@ export class TiledMapManager extends Component {
   sleep() {
     return new Promise((resolve) => {
       setTimeout(resolve, 200);
-    });
-  }
-
-  private loadSpriteFrames() {
-    return new Promise<SpriteFrame[]>((resolve, reject) => {
-      resources.loadDir('/texture/tile', SpriteFrame, (err, data) => {
-        if (err) {
-          reject(err);
-          return;
-        }
-        resolve(data);
-      });
     });
   }
 }

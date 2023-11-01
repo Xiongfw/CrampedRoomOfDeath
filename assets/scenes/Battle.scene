@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 47
+      "__id__": 51
     },
     "_id": "3a7c0a29-4818-4c5c-abdd-5c06c58b8715"
   },
@@ -76,21 +76,24 @@
       },
       {
         "__id__": 13
+      },
+      {
+        "__id__": 43
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 43
+        "__id__": 47
       },
       {
-        "__id__": 44
+        "__id__": 48
       },
       {
-        "__id__": 45
+        "__id__": 49
       },
       {
-        "__id__": 46
+        "__id__": 50
       }
     ],
     "_prefab": null,
@@ -182,7 +185,7 @@
     "_priority": 0,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 480,
+    "_orthoHeight": 480.00000000000006,
     "_near": 0,
     "_far": 1000,
     "_color": {
@@ -419,8 +422,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 298.9041448876342,
-      "height": 50.4
+      "width": 298.92578125,
+      "height": 50.400000000000006
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -452,7 +455,7 @@
     "_string": "Cramped Room Of Death Demo",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
-    "_actualFontSize": 23.291666666666664,
+    "_actualFontSize": 23,
     "_fontSize": 20,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
@@ -480,10 +483,10 @@
     "__prefab": null,
     "_alignFlags": 12,
     "_target": null,
-    "_left": 170.54792755618286,
+    "_left": 170.53710937499994,
     "_right": 176.65589361583184,
     "_top": 0,
-    "_bottom": 5,
+    "_bottom": 4.9999999999999964,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
     "_isAbsLeft": true,
@@ -1672,6 +1675,127 @@
     "_id": "67aJ4WCIBMM6W1OBqnDGw/"
   },
   {
+    "__type__": "cc.Node",
+    "_name": "Player",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 2
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 44
+      },
+      {
+        "__id__": 45
+      },
+      {
+        "__id__": 46
+      }
+    ],
+    "_prefab": null,
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": 244.212,
+      "y": -282.56,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_mobility": 0,
+    "_layer": 33554432,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": "4fgFWU8AZJzpJ1ckCCMQhu"
+  },
+  {
+    "__type__": "cc.UITransform",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 43
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 100,
+      "height": 100
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_id": "7bH8vTZvpNRokIsiydyFbK"
+  },
+  {
+    "__type__": "55054unOOJIZYn//FngeewY",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 43
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_id": "b6Or2PjhxAdpRKgKBRclJ5"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 43
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_customMaterial": null,
+    "_srcBlendFactor": 2,
+    "_dstBlendFactor": 4,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_spriteFrame": null,
+    "_type": 0,
+    "_fillType": 0,
+    "_sizeMode": 1,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_useGrayscale": false,
+    "_atlas": null,
+    "_id": "a9jvq8Q3RBTrTf2AaKcEBo"
+  },
+  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -1754,25 +1878,25 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 48
-    },
-    "shadows": {
-      "__id__": 49
-    },
-    "_skybox": {
-      "__id__": 50
-    },
-    "fog": {
-      "__id__": 51
-    },
-    "octree": {
       "__id__": 52
     },
-    "skin": {
+    "shadows": {
       "__id__": 53
     },
-    "lightProbeInfo": {
+    "_skybox": {
       "__id__": 54
+    },
+    "fog": {
+      "__id__": 55
+    },
+    "octree": {
+      "__id__": 56
+    },
+    "skin": {
+      "__id__": 57
+    },
+    "lightProbeInfo": {
+      "__id__": 58
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
