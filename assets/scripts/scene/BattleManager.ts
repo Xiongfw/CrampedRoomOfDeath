@@ -59,14 +59,16 @@ export class BattleManager extends Component {
   generateTiledMap() {
     const tiledMap = createUINode('TiledMap');
     this.stage.addChild(tiledMap);
-    tiledMap.addComponent(TiledMapManager);
+    const tiledMapManager = tiledMap.addComponent(TiledMapManager);
+    tiledMapManager.init();
 
     this.adaptPos();
   }
 
   generatePlayer() {
     const node = createUINode('Player');
-    node.addComponent(PlayerManager);
+    const playerManager = node.addComponent(PlayerManager);
+    playerManager.init();
     this.stage.addChild(node);
   }
 

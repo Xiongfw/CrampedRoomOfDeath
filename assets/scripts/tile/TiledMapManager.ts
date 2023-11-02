@@ -1,16 +1,4 @@
-import {
-  _decorator,
-  Component,
-  Enum,
-  Layers,
-  Node,
-  randomRangeInt,
-  resources,
-  Sprite,
-  SpriteFrame,
-  UITransform,
-} from 'cc';
-import levels from '../level';
+import { _decorator, Component, randomRangeInt } from 'cc';
 import { TileManager } from './TileManager';
 import { createUINode } from '../utils';
 import { DataManager } from '../runtime/DataManager';
@@ -19,15 +7,13 @@ const { ccclass } = _decorator;
 
 @ccclass('TiledMapManager')
 export class TiledMapManager extends Component {
-  start() {
-    this.init();
-  }
-
   async init() {
     const { mapInfo } = DataManager.instance;
+    DataManager.instance.tileInfo = [];
     const spriteFrames = await ResourceManager.instance.loadSpriteFrames('/texture/tile');
     for (let i = 0; i < mapInfo.length; i++) {
       const column = mapInfo[i];
+      DataManager.instance.tileInfo[i] = [];
       for (let j = 0; j < column.length; j++) {
         const tile = column[j];
         if (tile.src === null || tile.type === null) {
@@ -42,7 +28,8 @@ export class TiledMapManager extends Component {
         }
         const imgSrc = `tile (${num})`;
         const spriteFrame = spriteFrames.find((i) => i.name === imgSrc) || spriteFrames[0];
-        tileManager.init(spriteFrame, i, j);
+        tileManager.init(tile.type, spriteFrame, i, j);
+        DataManager.instance.tileInfo[i][j] = tileManager;
 
         tileNode.setParent(this.node);
         // await this.sleep();
