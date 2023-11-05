@@ -7,6 +7,7 @@ import { TILE_WIDTH, TILE_HEIGHT } from '../tile/TileManager';
 import { EventManager } from '../runtime/EventManager';
 import { EVENT_ENUM } from '../enum';
 import { PlayerManager } from '../player/PlayerManager';
+import { WoodenSkeletonManager } from '../woodenskeleton/WoodenSkeletonManager';
 const { ccclass } = _decorator;
 
 @ccclass('BattleManager')
@@ -37,6 +38,7 @@ export class BattleManager extends Component {
       DataManager.instance.mapColumnCount = this.level.mapInfo[0].length || 0;
 
       this.generateTiledMap();
+      this.generateEnemies();
       this.generatePlayer();
     }
   }
@@ -69,6 +71,13 @@ export class BattleManager extends Component {
     const node = createUINode('Player');
     const playerManager = node.addComponent(PlayerManager);
     playerManager.init();
+    this.stage.addChild(node);
+  }
+
+  generateEnemies() {
+    const node = createUINode('WoodenSkeleton');
+    const woodenSkeletonManager = node.addComponent(WoodenSkeletonManager);
+    woodenSkeletonManager.init();
     this.stage.addChild(node);
   }
 
