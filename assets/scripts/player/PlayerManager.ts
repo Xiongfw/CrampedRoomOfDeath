@@ -168,6 +168,7 @@ export class PlayerManager extends EntityManager {
     // 攻击敌人
     if (this.willAttack(inputDirection)) {
       EventManager.instance.emit(EVENT_ENUM.ATTACK_ENEMY);
+      EventManager.instance.emit(EVENT_ENUM.DOOR_OPEN);
       return;
     }
     this.move(inputDirection);

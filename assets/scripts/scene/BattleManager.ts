@@ -8,6 +8,7 @@ import { EventManager } from '../runtime/EventManager';
 import { EVENT_ENUM } from '../enum';
 import { PlayerManager } from '../player/PlayerManager';
 import { WoodenSkeletonManager } from '../woodenskeleton/WoodenSkeletonManager';
+import { DoorManager } from '../door/DoorManager';
 const { ccclass } = _decorator;
 
 @ccclass('BattleManager')
@@ -39,6 +40,7 @@ export class BattleManager extends Component {
 
       this.generateTiledMap();
       this.generateEnemies();
+      this.generateDoor();
       this.generatePlayer();
     }
   }
@@ -56,6 +58,13 @@ export class BattleManager extends Component {
   generateStage() {
     this.stage = createUINode('Stage');
     this.node.addChild(this.stage);
+  }
+
+  generateDoor() {
+    const node = createUINode('Door');
+    const doorManager = node.addComponent(DoorManager);
+    doorManager.init();
+    this.stage.addChild(node);
   }
 
   generateTiledMap() {
