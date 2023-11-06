@@ -11,6 +11,8 @@ import { BlockTurnLeftSubStateMachine } from './BlockTurnLeftSubStateMachine';
 import { BlockBackSubStateMachine } from './BlockBackSubStateMachine';
 import { BlockLeftSubStateMachine } from './BlockLeftSubStateMachine';
 import { BlockRightSubStateMachine } from './BlockRightSubStateMachine';
+import { DeathSubStateMachine } from './DeathSubStateMachine';
+import { AirDeathSubStateMachine } from './AirDeathSubStateMachine';
 const { ccclass } = _decorator;
 
 @ccclass('PlayerStateMachine')
@@ -46,6 +48,8 @@ export class PlayerStateMachine extends StateMachine {
     this.params.set(PARAMS_NAME_NUM.BLOCKTURNLEFT, getInitTriggerValue());
     this.params.set(PARAMS_NAME_NUM.BLOCKTURNRIGHT, getInitTriggerValue());
     this.params.set(PARAMS_NAME_NUM.DIRECTION, getInitNumberValue());
+    this.params.set(PARAMS_NAME_NUM.DEATH, getInitTriggerValue());
+    this.params.set(PARAMS_NAME_NUM.AIRDEATE, getInitTriggerValue());
   }
 
   initStateMachines() {
@@ -58,6 +62,8 @@ export class PlayerStateMachine extends StateMachine {
     this.stateMachines.set(PARAMS_NAME_NUM.BLOCKRIGHT, new BlockRightSubStateMachine(this));
     this.stateMachines.set(PARAMS_NAME_NUM.BLOCKTURNLEFT, new BlockTurnLeftSubStateMachine(this));
     this.stateMachines.set(PARAMS_NAME_NUM.BLOCKTURNRIGHT, new BlockTurnRightSubStateMachine(this));
+    this.stateMachines.set(PARAMS_NAME_NUM.DEATH, new DeathSubStateMachine(this));
+    this.stateMachines.set(PARAMS_NAME_NUM.AIRDEATE, new AirDeathSubStateMachine(this));
   }
 
   run() {

@@ -2,6 +2,7 @@ import { _decorator, Animation } from 'cc';
 import { FSM_PARAMS_TYPE_NUM, PARAMS_NAME_NUM } from '../enum';
 import { StateMachine, getInitNumberValue, getInitTriggerValue } from '../base/StateMachine';
 import { IdleSubStateMahchine } from './IdleSubStateMahchine';
+import { AttackSubStateMahchine } from './AttackSubStateMahchine';
 
 const { ccclass } = _decorator;
 
@@ -18,22 +19,24 @@ export class WoodenSkeletonStateMachine extends StateMachine {
   }
 
   initAnimationEvent() {
-    // this.ani.on(Animation.EventType.FINISHED, () => {
-    //   const name = this.ani.defaultClip?.name;
-    //   const whiteList = ['block', 'turn'];
-    //   if (whiteList.some((v) => name?.includes(v))) {
-    //     this.setParams(PARAMS_NAME_NUM.IDLE, true);
-    //   }
-    // });
+    this.ani.on(Animation.EventType.FINISHED, () => {
+      const name = this.ani.defaultClip?.name;
+      const whiteList = ['attack'];
+      if (whiteList.some((v) => name?.includes(v))) {
+        this.setParams(PARAMS_NAME_NUM.IDLE, true);
+      }
+    });
   }
 
   initParams() {
     this.params.set(PARAMS_NAME_NUM.IDLE, getInitTriggerValue());
+    this.params.set(PARAMS_NAME_NUM.ATTACK, getInitTriggerValue());
     this.params.set(PARAMS_NAME_NUM.DIRECTION, getInitNumberValue());
   }
 
   initStateMachines() {
     this.stateMachines.set(PARAMS_NAME_NUM.IDLE, new IdleSubStateMahchine(this));
+    this.stateMachines.set(PARAMS_NAME_NUM.ATTACK, new AttackSubStateMahchine(this));
   }
 
   run() {
