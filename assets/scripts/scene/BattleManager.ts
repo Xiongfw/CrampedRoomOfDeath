@@ -70,7 +70,10 @@ export class BattleManager extends Component {
   generatePlayer() {
     const node = createUINode('Player');
     const playerManager = node.addComponent(PlayerManager);
-    playerManager.init();
+    playerManager.init().then(() => {
+      EventManager.instance.emit(EVENT_ENUM.PLAYER_BORN);
+    });
+    DataManager.instance.player = playerManager;
     this.stage.addChild(node);
   }
 
@@ -78,6 +81,7 @@ export class BattleManager extends Component {
     const node = createUINode('WoodenSkeleton');
     const woodenSkeletonManager = node.addComponent(WoodenSkeletonManager);
     woodenSkeletonManager.init();
+    DataManager.instance.enemies.push(woodenSkeletonManager);
     this.stage.addChild(node);
   }
 

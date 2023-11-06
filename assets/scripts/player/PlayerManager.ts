@@ -17,6 +17,7 @@ const { ccclass } = _decorator;
 export class PlayerManager extends EntityManager {
   targetX = 0;
   targetY = 0;
+  isMoving = false;
   private readonly speed = 1 / 10;
 
   async init() {
@@ -58,9 +59,16 @@ export class PlayerManager extends EntityManager {
       this.y -= this.speed;
     }
 
-    if (Math.abs(this.x - this.targetX) < 0.1 && Math.abs(this.y - this.targetY) < 0.1) {
+    // 防止人物鬼畜
+    if (
+      Math.abs(this.x - this.targetX) < 0.1 &&
+      Math.abs(this.y - this.targetY) < 0.1 &&
+      this.isMoving
+    ) {
+      this.isMoving = false;
       this.x = this.targetX;
       this.y = this.targetY;
+      EventManager.instance.emit(EVENT_ENUM.PLAYER_MOVE_END);
     }
   }
 
@@ -145,15 +153,19 @@ export class PlayerManager extends EntityManager {
     switch (inputDirection) {
       case INPUT_DIRECTION_ENUM.TOP:
         this.targetY += 1;
+        this.isMoving = true;
         break;
       case INPUT_DIRECTION_ENUM.BOTTOM:
         this.targetY -= 1;
+        this.isMoving = true;
         break;
       case INPUT_DIRECTION_ENUM.LEFT:
         this.targetX -= 1;
+        this.isMoving = true;
         break;
       case INPUT_DIRECTION_ENUM.RIGHT:
         this.targetX += 1;
+        this.isMoving = true;
         break;
       case INPUT_DIRECTION_ENUM.TURNLEFT:
         this.state = ENTITY_STATE_ENUM.TURNLEFT;
