@@ -1,8 +1,8 @@
+import { EnemyManager } from '../base/EnemyManager';
 import { Singleton } from '../base/Singleton';
 import { Tile } from '../level/index';
 import { PlayerManager } from '../player/PlayerManager';
 import { TileManager } from '../tile/TileManager';
-import { WoodenSkeletonManager } from '../woodenskeleton/WoodenSkeletonManager';
 
 export class DataManager extends Singleton {
   static get instance() {
@@ -14,7 +14,7 @@ export class DataManager extends Singleton {
   mapRowCount: number = 0;
   mapColumnCount: number = 0;
   player: PlayerManager | null = null;
-  enemies: WoodenSkeletonManager[] = [];
+  enemies: EnemyManager[] = [];
   // 当前关卡索引
   levelIndex: number = 1;
 

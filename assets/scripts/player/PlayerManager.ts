@@ -11,6 +11,7 @@ import { PlayerStateMachine } from './PlayerStateMachine';
 import { EntityManager } from '../base/EntityManager';
 import { DataManager } from '../runtime/DataManager';
 import { TileManager } from '../tile/TileManager';
+import { Entity } from '../level';
 const { ccclass } = _decorator;
 
 @ccclass('PlayerManager')
@@ -20,16 +21,10 @@ export class PlayerManager extends EntityManager {
   isMoving = false;
   private readonly speed = 1 / 10;
 
-  async init() {
+  async init(params: Entity) {
     this.fsm = this.addComponent(PlayerStateMachine)!;
     await this.fsm.init();
-    super.init({
-      x: 2,
-      y: -8,
-      type: ENTITY_TYPE_ENUM.PLAYER,
-      direciton: DIRECTION_ENUM.TOP,
-      state: ENTITY_STATE_ENUM.IDLE,
-    });
+    super.init(params);
     this.targetX = this.x;
     this.targetY = this.y;
 
@@ -165,9 +160,10 @@ export class PlayerManager extends EntityManager {
       this.handleBlock(inputDirection);
       return;
     }
+    const enemyId = this.willAttack(inputDirection);
     // 攻击敌人
-    if (this.willAttack(inputDirection)) {
-      EventManager.instance.emit(EVENT_ENUM.ATTACK_ENEMY);
+    if (enemyId) {
+      EventManager.instance.emit(EVENT_ENUM.ATTACK_ENEMY, enemyId);
       EventManager.instance.emit(EVENT_ENUM.DOOR_OPEN);
       return;
     }
@@ -189,7 +185,7 @@ export class PlayerManager extends EntityManager {
         this.y + 2 === enemyY
       ) {
         this.state = ENTITY_STATE_ENUM.ATTACK;
-        return true;
+        return enemy.id;
       } else if (
         inputDirection === INPUT_DIRECTION_ENUM.BOTTOM &&
         direction === DIRECTION_ENUM.BOTTOM &&
@@ -197,7 +193,7 @@ export class PlayerManager extends EntityManager {
         this.y - 2 === enemyY
       ) {
         this.state = ENTITY_STATE_ENUM.ATTACK;
-        return true;
+        return enemy.id;
       } else if (
         inputDirection === INPUT_DIRECTION_ENUM.LEFT &&
         direction === DIRECTION_ENUM.LEFT &&
@@ -205,7 +201,7 @@ export class PlayerManager extends EntityManager {
         this.y === enemyY
       ) {
         this.state = ENTITY_STATE_ENUM.ATTACK;
-        return true;
+        return enemy.id;
       } else if (
         inputDirection === INPUT_DIRECTION_ENUM.RIGHT &&
         direction === DIRECTION_ENUM.RIGHT &&
@@ -213,7 +209,7 @@ export class PlayerManager extends EntityManager {
         this.y === enemyY
       ) {
         this.state = ENTITY_STATE_ENUM.ATTACK;
-        return true;
+        return enemy.id;
       }
     }
 

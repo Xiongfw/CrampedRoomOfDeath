@@ -8,3 +8,10 @@ export function createUINode(name?: string) {
 
   return node;
 }
+
+export function randomBylen(len: number) {
+  return Array.from({ length: len }).reduce<string>(
+    (prev) => prev + Math.floor(Math.random() * 10),
+    ''
+  );
+}

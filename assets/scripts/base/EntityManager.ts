@@ -9,10 +9,12 @@ import {
 } from '../enum';
 import { Entity } from '../level';
 import { StateMachine } from './StateMachine';
+import { randomBylen } from '../utils';
 const { ccclass } = _decorator;
 
 @ccclass('EntityManager')
 export class EntityManager extends Component {
+  id = randomBylen(8);
   x = 0;
   y = 0;
   fsm!: StateMachine;
