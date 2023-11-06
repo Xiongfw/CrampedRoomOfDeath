@@ -148,17 +148,75 @@ export class PlayerManager extends EntityManager {
   }
 
   handleInput(inputDirection: INPUT_DIRECTION_ENUM) {
+    // 正在移动
     if (this.isMoving) {
       return;
     }
+    // 正在攻击
+    if (this.state === ENTITY_STATE_ENUM.ATTACK) {
+      return;
+    }
+    // 已经死亡
     if (this.state === ENTITY_STATE_ENUM.DEATH || this.state === ENTITY_STATE_ENUM.AIRDEATE) {
       return;
     }
+    // 碰到墙
     if (this.willBlock(inputDirection)) {
       this.handleBlock(inputDirection);
       return;
     }
+    // 攻击敌人
+    if (this.willAttack(inputDirection)) {
+      EventManager.instance.emit(EVENT_ENUM.ATTACK_ENEMY);
+      return;
+    }
     this.move(inputDirection);
+  }
+
+  willAttack(inputDirection: INPUT_DIRECTION_ENUM) {
+    const { direction } = this;
+    const { enemies } = DataManager.instance;
+    for (const enemy of enemies) {
+      if (enemy.state === ENTITY_STATE_ENUM.DEATH) {
+        continue;
+      }
+      const { x: enemyX, y: enemyY } = enemy;
+      if (
+        inputDirection === INPUT_DIRECTION_ENUM.TOP &&
+        direction === DIRECTION_ENUM.TOP &&
+        this.x === enemyX &&
+        this.y + 2 === enemyY
+      ) {
+        this.state = ENTITY_STATE_ENUM.ATTACK;
+        return true;
+      } else if (
+        inputDirection === INPUT_DIRECTION_ENUM.BOTTOM &&
+        direction === DIRECTION_ENUM.BOTTOM &&
+        this.x === enemyX &&
+        this.y - 2 === enemyY
+      ) {
+        this.state = ENTITY_STATE_ENUM.ATTACK;
+        return true;
+      } else if (
+        inputDirection === INPUT_DIRECTION_ENUM.LEFT &&
+        direction === DIRECTION_ENUM.LEFT &&
+        this.x - 2 === enemyX &&
+        this.y === enemyY
+      ) {
+        this.state = ENTITY_STATE_ENUM.ATTACK;
+        return true;
+      } else if (
+        inputDirection === INPUT_DIRECTION_ENUM.RIGHT &&
+        direction === DIRECTION_ENUM.RIGHT &&
+        this.x + 2 === enemyX &&
+        this.y === enemyY
+      ) {
+        this.state = ENTITY_STATE_ENUM.ATTACK;
+        return true;
+      }
+    }
+
+    return false;
   }
 
   move(inputDirection: INPUT_DIRECTION_ENUM) {

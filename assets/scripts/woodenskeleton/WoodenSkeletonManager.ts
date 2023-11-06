@@ -21,6 +21,7 @@ export class WoodenSkeletonManager extends EntityManager {
     EventManager.instance.on(EVENT_ENUM.PLAYER_BORN, this.onChangeDirection, this);
     EventManager.instance.on(EVENT_ENUM.PLAYER_MOVE_END, this.onChangeDirection, this);
     EventManager.instance.on(EVENT_ENUM.PLAYER_MOVE_END, this.onAttack, this);
+    EventManager.instance.on(EVENT_ENUM.ATTACK_ENEMY, this.onDeath, this);
   }
 
   onDestroy(): void {
@@ -28,6 +29,7 @@ export class WoodenSkeletonManager extends EntityManager {
     EventManager.instance.off(EVENT_ENUM.PLAYER_BORN, this.onChangeDirection);
     EventManager.instance.off(EVENT_ENUM.PLAYER_MOVE_END, this.onChangeDirection);
     EventManager.instance.off(EVENT_ENUM.PLAYER_MOVE_END, this.onAttack);
+    EventManager.instance.off(EVENT_ENUM.ATTACK_ENEMY, this.onDeath);
   }
 
   onChangeDirection() {
@@ -76,5 +78,11 @@ export class WoodenSkeletonManager extends EntityManager {
       this.state = ENTITY_STATE_ENUM.ATTACK;
       EventManager.instance.emit(EVENT_ENUM.ATTACK_PLAYER, ENTITY_STATE_ENUM.DEATH);
     }
+  }
+
+  onDeath() {
+    this.state = ENTITY_STATE_ENUM.DEATH;
+    EventManager.instance.off(EVENT_ENUM.PLAYER_MOVE_END, this.onChangeDirection);
+    EventManager.instance.off(EVENT_ENUM.PLAYER_MOVE_END, this.onAttack);
   }
 }

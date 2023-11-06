@@ -1,5 +1,5 @@
 import { _decorator, AnimationClip, Component, Animation, SpriteFrame, debug } from 'cc';
-import { FSM_PARAMS_TYPE_NUM, PARAMS_NAME_NUM } from '../enum';
+import { ENTITY_STATE_ENUM, FSM_PARAMS_TYPE_NUM, PARAMS_NAME_NUM } from '../enum';
 import { State } from '../base/State';
 import { StateMachine, getInitNumberValue, getInitTriggerValue } from '../base/StateMachine';
 import { IdleSubStateMahchine } from './IdleSubStateMahchine';
@@ -13,6 +13,8 @@ import { BlockLeftSubStateMachine } from './BlockLeftSubStateMachine';
 import { BlockRightSubStateMachine } from './BlockRightSubStateMachine';
 import { DeathSubStateMachine } from './DeathSubStateMachine';
 import { AirDeathSubStateMachine } from './AirDeathSubStateMachine';
+import { AttackSubStateMahchine } from './AttackSubStateMahchine';
+import { PlayerManager } from './PlayerManager';
 const { ccclass } = _decorator;
 
 @ccclass('PlayerStateMachine')
@@ -30,9 +32,9 @@ export class PlayerStateMachine extends StateMachine {
   initAnimationEvent() {
     this.ani.on(Animation.EventType.FINISHED, () => {
       const name = this.ani.defaultClip?.name;
-      const whiteList = ['block', 'turn'];
+      const whiteList = ['block', 'turn', 'attack'];
       if (whiteList.some((v) => name?.includes(v))) {
-        this.setParams(PARAMS_NAME_NUM.IDLE, true);
+        this.node.getComponent(PlayerManager)!.state = ENTITY_STATE_ENUM.IDLE;
       }
     });
   }
@@ -50,6 +52,7 @@ export class PlayerStateMachine extends StateMachine {
     this.params.set(PARAMS_NAME_NUM.DIRECTION, getInitNumberValue());
     this.params.set(PARAMS_NAME_NUM.DEATH, getInitTriggerValue());
     this.params.set(PARAMS_NAME_NUM.AIRDEATE, getInitTriggerValue());
+    this.params.set(PARAMS_NAME_NUM.ATTACK, getInitTriggerValue());
   }
 
   initStateMachines() {
@@ -64,6 +67,7 @@ export class PlayerStateMachine extends StateMachine {
     this.stateMachines.set(PARAMS_NAME_NUM.BLOCKTURNRIGHT, new BlockTurnRightSubStateMachine(this));
     this.stateMachines.set(PARAMS_NAME_NUM.DEATH, new DeathSubStateMachine(this));
     this.stateMachines.set(PARAMS_NAME_NUM.AIRDEATE, new AirDeathSubStateMachine(this));
+    this.stateMachines.set(PARAMS_NAME_NUM.ATTACK, new AttackSubStateMahchine(this));
   }
 
   run() {

@@ -3,6 +3,7 @@ import { FSM_PARAMS_TYPE_NUM, PARAMS_NAME_NUM } from '../enum';
 import { StateMachine, getInitNumberValue, getInitTriggerValue } from '../base/StateMachine';
 import { IdleSubStateMahchine } from './IdleSubStateMahchine';
 import { AttackSubStateMahchine } from './AttackSubStateMahchine';
+import { DeathSubStateMachine } from './DeathSubStateMachine';
 
 const { ccclass } = _decorator;
 
@@ -32,11 +33,13 @@ export class WoodenSkeletonStateMachine extends StateMachine {
     this.params.set(PARAMS_NAME_NUM.IDLE, getInitTriggerValue());
     this.params.set(PARAMS_NAME_NUM.ATTACK, getInitTriggerValue());
     this.params.set(PARAMS_NAME_NUM.DIRECTION, getInitNumberValue());
+    this.params.set(PARAMS_NAME_NUM.DEATH, getInitTriggerValue());
   }
 
   initStateMachines() {
     this.stateMachines.set(PARAMS_NAME_NUM.IDLE, new IdleSubStateMahchine(this));
     this.stateMachines.set(PARAMS_NAME_NUM.ATTACK, new AttackSubStateMahchine(this));
+    this.stateMachines.set(PARAMS_NAME_NUM.DEATH, new DeathSubStateMachine(this));
   }
 
   run() {
