@@ -10,6 +10,7 @@ import { PlayerManager } from '../player/PlayerManager';
 import { WoodenSkeletonManager } from '../woodenskeleton/WoodenSkeletonManager';
 import { DoorManager } from '../door/DoorManager';
 import { IronSkeletonManager } from '../ironskeleton/IronSkeletonManager';
+import { BurstManager } from '../burst/BurstManager';
 const { ccclass } = _decorator;
 
 @ccclass('BattleManager')
@@ -42,6 +43,7 @@ export class BattleManager extends Component {
       this.generateTiledMap();
       this.generateEnemies();
       this.generateDoor();
+      this.generateBurst();
       this.generatePlayer();
     }
   }
@@ -65,6 +67,20 @@ export class BattleManager extends Component {
     const node = createUINode('Door');
     const doorManager = node.addComponent(DoorManager);
     doorManager.init();
+    this.stage.addChild(node);
+  }
+
+  generateBurst() {
+    const node = createUINode('Burst');
+    const burstManager = node.addComponent(BurstManager);
+    burstManager.init({
+      x: 2,
+      y: -5,
+      type: ENTITY_TYPE_ENUM.BURST,
+      direciton: DIRECTION_ENUM.TOP,
+      state: ENTITY_STATE_ENUM.IDLE,
+    });
+    DataManager.instance.bursts.push(burstManager);
     this.stage.addChild(node);
   }
 
@@ -99,8 +115,8 @@ export class BattleManager extends Component {
     const enemy1 = createUINode('WoodenSkeleton');
     const woodenSkeletonManager = enemy1.addComponent(WoodenSkeletonManager);
     woodenSkeletonManager.init({
-      x: 2,
-      y: -5,
+      x: 7,
+      y: -6,
       type: ENTITY_TYPE_ENUM.SKELETON_WOODEN,
       direciton: DIRECTION_ENUM.TOP,
       state: ENTITY_STATE_ENUM.IDLE,

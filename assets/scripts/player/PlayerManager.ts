@@ -245,6 +245,7 @@ export class PlayerManager extends EntityManager {
         } else if (this.direction === DIRECTION_ENUM.RIGHT) {
           this.direction = DIRECTION_ENUM.TOP;
         }
+        EventManager.instance.emit(EVENT_ENUM.PLAYER_MOVE_END);
         break;
       case INPUT_DIRECTION_ENUM.TURNRIGHT:
         this.state = ENTITY_STATE_ENUM.TURNRIGHT;
@@ -257,6 +258,7 @@ export class PlayerManager extends EntityManager {
         } else if (this.direction === DIRECTION_ENUM.LEFT) {
           this.direction = DIRECTION_ENUM.TOP;
         }
+        EventManager.instance.emit(EVENT_ENUM.PLAYER_MOVE_END);
         break;
     }
   }
