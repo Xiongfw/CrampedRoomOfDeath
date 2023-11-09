@@ -23,11 +23,11 @@ export class EventManager extends Singleton {
     }
   }
 
-  emit(eventName: string, data?: unknown) {
+  emit(eventName: string, ...data: unknown[]) {
     const funs = this._eventDic.get(eventName);
     if (funs) {
       funs.forEach(({ fun, context }) => {
-        fun.call(context, data);
+        fun.call(context, ...data);
       });
     }
   }

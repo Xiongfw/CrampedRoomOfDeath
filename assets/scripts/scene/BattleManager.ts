@@ -5,13 +5,14 @@ import levels, { ILevel } from '../level';
 import { DataManager } from '../runtime/DataManager';
 import { TILE_WIDTH, TILE_HEIGHT } from '../tile/TileManager';
 import { EventManager } from '../runtime/EventManager';
-import { ENTITY_STATE_ENUM, ENTITY_TYPE_ENUM, EVENT_ENUM } from '../enum';
+import { DIRECTION_ENUM, ENTITY_STATE_ENUM, ENTITY_TYPE_ENUM, EVENT_ENUM } from '../enum';
 import { PlayerManager } from '../player/PlayerManager';
 import { WoodenSkeletonManager } from '../woodenskeleton/WoodenSkeletonManager';
 import { DoorManager } from '../door/DoorManager';
 import { IronSkeletonManager } from '../ironskeleton/IronSkeletonManager';
 import { BurstManager } from '../burst/BurstManager';
 import { SpikeManager } from '../spike/SpikeManager';
+import { SmokeManager } from '../smoke/SmokeManager';
 const { ccclass } = _decorator;
 
 @ccclass('BattleManager')
@@ -58,6 +59,7 @@ export class BattleManager extends Component {
       this.generateDoor();
       this.generateBurst();
       this.generateSpike();
+      this.generateSmoke();
       this.generatePlayer();
     }
   }
@@ -75,6 +77,19 @@ export class BattleManager extends Component {
   generateStage() {
     this.stage = createUINode('Stage');
     this.node.addChild(this.stage);
+  }
+
+  generateSmoke() {
+    const node = createUINode('Smoke');
+    const smokeManager = node.addComponent(SmokeManager);
+    smokeManager.init({
+      x: 0,
+      y: 0,
+      type: ENTITY_TYPE_ENUM.SMOKE,
+      direction: DIRECTION_ENUM.TOP,
+      state: ENTITY_STATE_ENUM.DEATH,
+    });
+    this.stage.addChild(node);
   }
 
   generateSpike() {

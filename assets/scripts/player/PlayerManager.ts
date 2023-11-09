@@ -221,18 +221,22 @@ export class PlayerManager extends EntityManager {
       case INPUT_DIRECTION_ENUM.TOP:
         this.targetY += 1;
         this.isMoving = true;
+        this.showSmoke(DIRECTION_ENUM.TOP);
         break;
       case INPUT_DIRECTION_ENUM.BOTTOM:
         this.targetY -= 1;
         this.isMoving = true;
+        this.showSmoke(DIRECTION_ENUM.BOTTOM);
         break;
       case INPUT_DIRECTION_ENUM.LEFT:
         this.targetX -= 1;
         this.isMoving = true;
+        this.showSmoke(DIRECTION_ENUM.LEFT);
         break;
       case INPUT_DIRECTION_ENUM.RIGHT:
         this.targetX += 1;
         this.isMoving = true;
+        this.showSmoke(DIRECTION_ENUM.RIGHT);
         break;
       case INPUT_DIRECTION_ENUM.TURNLEFT:
         this.state = ENTITY_STATE_ENUM.TURNLEFT;
@@ -261,6 +265,10 @@ export class PlayerManager extends EntityManager {
         EventManager.instance.emit(EVENT_ENUM.PLAYER_MOVE_END);
         break;
     }
+  }
+
+  showSmoke(direction: DIRECTION_ENUM) {
+    EventManager.instance.emit(EVENT_ENUM.SHOW_SMOKE, this.x, this.y, direction);
   }
 
   // 判断是不是撞了
