@@ -3,12 +3,12 @@ import { EntityManager } from '../base/EntityManager';
 import { DIRECTION_ENUM, ENTITY_STATE_ENUM, EVENT_ENUM } from '../enum';
 import { EventManager } from '../runtime/EventManager';
 import { DataManager } from '../runtime/DataManager';
-import { Entity } from '../level';
+import { IEntity } from '../level';
 const { ccclass } = _decorator;
 
 @ccclass('EnemyManager')
 export class EnemyManager extends EntityManager {
-  async init(params: Entity) {
+  async init(params: IEntity) {
     super.init(params);
     EventManager.instance.on(EVENT_ENUM.PLAYER_BORN, this.onChangeDirection, this);
     EventManager.instance.on(EVENT_ENUM.PLAYER_MOVE_END, this.onChangeDirection, this);

@@ -11,7 +11,7 @@ import { PlayerStateMachine } from './PlayerStateMachine';
 import { EntityManager } from '../base/EntityManager';
 import { DataManager } from '../runtime/DataManager';
 import { TileManager } from '../tile/TileManager';
-import { Entity } from '../level';
+import { IEntity } from '../level';
 const { ccclass } = _decorator;
 
 @ccclass('PlayerManager')
@@ -21,7 +21,7 @@ export class PlayerManager extends EntityManager {
   isMoving = false;
   private readonly speed = 1 / 10;
 
-  async init(params: Entity) {
+  async init(params: IEntity) {
     this.fsm = this.addComponent(PlayerStateMachine)!;
     await this.fsm.init();
     super.init(params);

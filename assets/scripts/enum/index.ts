@@ -88,6 +88,10 @@ export enum ENTITY_TYPE_ENUM {
   SKELETON_IRON = 'SKELETON_IRON',
   DOOR = 'DOOR',
   BURST = 'BURST',
+  SPIKES_ONE = 'SPIKES_ONE',
+  SPIKES_TWO = 'SPIKES_TWO',
+  SPIKES_THREE = 'SPIKES_THREE',
+  SPIKES_FOUR = 'SPIKES_FOUR',
 }
 
 export enum SPIKE_STATE_ENUM {
@@ -105,12 +109,5 @@ export enum SPIKE_STATE_ORDER_ENUM {
   THREE = 3,
   FOUR = 4,
   FIVE = 5,
-}
-
-export enum SPIKE_TYPE_ENUM {
-  ONE = 'ONE',
-  TWO = 'TWO',
-  THREE = 'THREE',
-  FOUR = 'FOUR',
 }
 

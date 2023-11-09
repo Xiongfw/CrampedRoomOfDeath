@@ -1,5 +1,5 @@
 import { UITransform, _decorator } from 'cc';
-import { Entity } from '../level';
+import { IEntity } from '../level';
 import { BurstStateMachine } from './BurstStateMachine';
 import { EntityManager } from '../base/EntityManager';
 import { TILE_WIDTH, TILE_HEIGHT } from '../tile/TileManager';
@@ -10,7 +10,7 @@ const { ccclass } = _decorator;
 
 @ccclass('BurstManager')
 export class BurstManager extends EntityManager {
-  async init(params: Entity) {
+  async init(params: IEntity) {
     this.fsm = this.addComponent(BurstStateMachine)!;
     await this.fsm.init();
 

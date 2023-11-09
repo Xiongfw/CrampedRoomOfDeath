@@ -4,12 +4,12 @@ import { WoodenSkeletonStateMachine } from './WoodenSkeletonStateMachine';
 import { EventManager } from '../runtime/EventManager';
 import { DataManager } from '../runtime/DataManager';
 import { EnemyManager } from '../base/EnemyManager';
-import { Entity } from '../level';
+import { IEntity } from '../level';
 const { ccclass } = _decorator;
 
 @ccclass('WoodenSkeletonManager')
 export class WoodenSkeletonManager extends EnemyManager {
-  async init(params: Entity) {
+  async init(params: IEntity) {
     this.fsm = this.addComponent(WoodenSkeletonStateMachine)!;
     await this.fsm.init();
     super.init(params);

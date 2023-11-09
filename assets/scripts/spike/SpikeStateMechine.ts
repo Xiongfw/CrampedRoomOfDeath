@@ -1,5 +1,5 @@
 import { _decorator, Animation } from 'cc';
-import { FSM_PARAMS_TYPE_NUM, PARAMS_NAME_NUM, SPIKE_STATE_ENUM, SPIKE_TYPE_ENUM } from '../enum';
+import { ENTITY_STATE_ENUM, ENTITY_TYPE_ENUM, FSM_PARAMS_TYPE_NUM, PARAMS_NAME_NUM } from '../enum';
 import { StateMachine, getInitNumberValue, getInitTriggerValue } from '../base/StateMachine';
 import { SpikeOneSubStateMechine } from './SpikeOneSubStateMechine';
 import { SpikeFourSubStateMechine } from './SpikeFourSubStateMechine';
@@ -32,17 +32,17 @@ export class SpikeStateMechine extends StateMachine {
 
   initParams() {
     this.params.set(PARAMS_NAME_NUM.SPIKE_STATE, getInitNumberValue());
-    this.params.set(SPIKE_TYPE_ENUM.ONE, getInitTriggerValue());
-    this.params.set(SPIKE_TYPE_ENUM.TWO, getInitTriggerValue());
-    this.params.set(SPIKE_TYPE_ENUM.THREE, getInitTriggerValue());
-    this.params.set(SPIKE_TYPE_ENUM.FOUR, getInitTriggerValue());
+    this.params.set(ENTITY_TYPE_ENUM.SPIKES_ONE, getInitTriggerValue());
+    this.params.set(ENTITY_TYPE_ENUM.SPIKES_TWO, getInitTriggerValue());
+    this.params.set(ENTITY_TYPE_ENUM.SPIKES_THREE, getInitTriggerValue());
+    this.params.set(ENTITY_TYPE_ENUM.SPIKES_FOUR, getInitTriggerValue());
   }
 
   initStateMachines() {
-    this.stateMachines.set(SPIKE_TYPE_ENUM.ONE, new SpikeOneSubStateMechine(this));
-    this.stateMachines.set(SPIKE_TYPE_ENUM.TWO, new SpikeTwoSubStateMechine(this));
-    this.stateMachines.set(SPIKE_TYPE_ENUM.THREE, new SpikeThreeSubStateMechine(this));
-    this.stateMachines.set(SPIKE_TYPE_ENUM.FOUR, new SpikeFourSubStateMechine(this));
+    this.stateMachines.set(ENTITY_TYPE_ENUM.SPIKES_ONE, new SpikeOneSubStateMechine(this));
+    this.stateMachines.set(ENTITY_TYPE_ENUM.SPIKES_TWO, new SpikeTwoSubStateMechine(this));
+    this.stateMachines.set(ENTITY_TYPE_ENUM.SPIKES_THREE, new SpikeThreeSubStateMechine(this));
+    this.stateMachines.set(ENTITY_TYPE_ENUM.SPIKES_FOUR, new SpikeFourSubStateMechine(this));
   }
 
   run() {

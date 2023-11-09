@@ -4,20 +4,15 @@ import { ENTITY_TYPE_ENUM, DIRECTION_ENUM, ENTITY_STATE_ENUM, EVENT_ENUM } from 
 import { EventManager } from '../runtime/EventManager';
 import { DoorStateMachine } from './DoorStateMachine';
 import { DataManager } from '../runtime/DataManager';
+import { IEntity } from '../level';
 const { ccclass } = _decorator;
 
 @ccclass('DoorManager')
 export class DoorManager extends EntityManager {
-  async init() {
+  async init(params: IEntity) {
     this.fsm = this.addComponent(DoorStateMachine)!;
     await this.fsm.init();
-    super.init({
-      x: 7,
-      y: -8,
-      type: ENTITY_TYPE_ENUM.DOOR,
-      direciton: DIRECTION_ENUM.TOP,
-      state: ENTITY_STATE_ENUM.IDLE,
-    });
+    super.init(params);
     EventManager.instance.on(EVENT_ENUM.DOOR_OPEN, this.onOpen, this);
   }
 

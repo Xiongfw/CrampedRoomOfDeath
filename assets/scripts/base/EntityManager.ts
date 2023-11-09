@@ -7,7 +7,7 @@ import {
   ENTITY_TYPE_ENUM,
   PARAMS_NAME_NUM,
 } from '../enum';
-import { Entity } from '../level';
+import { IEntity } from '../level';
 import { StateMachine } from './StateMachine';
 import { randomBylen } from '../utils';
 const { ccclass } = _decorator;
@@ -40,7 +40,7 @@ export class EntityManager extends Component {
     this.fsm.setParams(value, true);
   }
 
-  async init(params: Entity) {
+  async init(params: IEntity) {
     const sprite = this.addComponent(Sprite)!;
     sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 
@@ -49,7 +49,7 @@ export class EntityManager extends Component {
 
     this.x = params.x;
     this.y = params.y;
-    this.direction = params.direciton;
+    this.direction = params.direction;
     this.state = params.state;
     this.type = params.type;
   }

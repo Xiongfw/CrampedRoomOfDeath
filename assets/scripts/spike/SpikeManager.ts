@@ -1,17 +1,7 @@
 import { _decorator, Component, Sprite, UITransform } from 'cc';
 import { TILE_HEIGHT, TILE_WIDTH } from '../tile/TileManager';
-import {
-  DIRECTION_ENUM,
-  DIRECTION_ORDER_ENUM,
-  ENTITY_STATE_ENUM,
-  ENTITY_TYPE_ENUM,
-  EVENT_ENUM,
-  PARAMS_NAME_NUM,
-  SPIKE_STATE_ENUM,
-  SPIKE_STATE_ORDER_ENUM,
-  SPIKE_TYPE_ENUM,
-} from '../enum';
-import { Entity, Spike } from '../level';
+import { ENTITY_TYPE_ENUM, EVENT_ENUM, PARAMS_NAME_NUM } from '../enum';
+import { ISpikes } from '../level';
 import { randomBylen } from '../utils';
 import { SpikeStateMechine } from './SpikeStateMechine';
 import { EventManager } from '../runtime/EventManager';
@@ -24,7 +14,7 @@ export class SpikeManager extends Component {
   y = 0;
   fsm!: SpikeStateMechine;
   private _count!: number;
-  private _type!: SPIKE_TYPE_ENUM;
+  private _type!: ENTITY_TYPE_ENUM;
 
   get type() {
     return this._type;
@@ -44,7 +34,7 @@ export class SpikeManager extends Component {
     this.fsm.setParams(PARAMS_NAME_NUM.SPIKE_STATE, value);
   }
 
-  async init(params: Spike) {
+  async init(params: ISpikes) {
     const sprite = this.addComponent(Sprite)!;
     sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 
@@ -76,16 +66,16 @@ export class SpikeManager extends Component {
 
   onChangeCount() {
     switch (this.type) {
-      case SPIKE_TYPE_ENUM.ONE:
+      case ENTITY_TYPE_ENUM.SPIKES_ONE:
         this.count = (this.count + 1) % 3;
         break;
-      case SPIKE_TYPE_ENUM.TWO:
+      case ENTITY_TYPE_ENUM.SPIKES_TWO:
         this.count = (this.count + 1) % 4;
         break;
-      case SPIKE_TYPE_ENUM.THREE:
+      case ENTITY_TYPE_ENUM.SPIKES_THREE:
         this.count = (this.count + 1) % 5;
         break;
-      case SPIKE_TYPE_ENUM.FOUR:
+      case ENTITY_TYPE_ENUM.SPIKES_FOUR:
         this.count = (this.count + 1) % 6;
         break;
     }
