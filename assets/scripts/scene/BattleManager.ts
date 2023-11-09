@@ -5,12 +5,20 @@ import levels, { Level } from '../level';
 import { DataManager } from '../runtime/DataManager';
 import { TILE_WIDTH, TILE_HEIGHT } from '../tile/TileManager';
 import { EventManager } from '../runtime/EventManager';
-import { DIRECTION_ENUM, ENTITY_STATE_ENUM, ENTITY_TYPE_ENUM, EVENT_ENUM } from '../enum';
+import {
+  DIRECTION_ENUM,
+  ENTITY_STATE_ENUM,
+  ENTITY_TYPE_ENUM,
+  EVENT_ENUM,
+  SPIKE_STATE_ENUM,
+  SPIKE_TYPE_ENUM,
+} from '../enum';
 import { PlayerManager } from '../player/PlayerManager';
 import { WoodenSkeletonManager } from '../woodenskeleton/WoodenSkeletonManager';
 import { DoorManager } from '../door/DoorManager';
 import { IronSkeletonManager } from '../ironskeleton/IronSkeletonManager';
 import { BurstManager } from '../burst/BurstManager';
+import { SpikeManager } from '../spike/SpikeManager';
 const { ccclass } = _decorator;
 
 @ccclass('BattleManager')
@@ -44,6 +52,7 @@ export class BattleManager extends Component {
       this.generateEnemies();
       this.generateDoor();
       this.generateBurst();
+      this.generateSpike();
       this.generatePlayer();
     }
   }
@@ -61,6 +70,18 @@ export class BattleManager extends Component {
   generateStage() {
     this.stage = createUINode('Stage');
     this.node.addChild(this.stage);
+  }
+
+  generateSpike() {
+    const node = createUINode('Spike');
+    const spikeManager = node.addComponent(SpikeManager);
+    spikeManager.init({
+      x: 2,
+      y: -6,
+      type: SPIKE_TYPE_ENUM.THREE,
+      count: 0,
+    });
+    this.stage.addChild(node);
   }
 
   generateDoor() {

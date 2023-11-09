@@ -49,6 +49,8 @@ export enum PARAMS_NAME_NUM {
   DEATH = 'DEATH',
   AIRDEATE = 'AIRDEATE',
   DIRECTION = 'DIRECTION',
+
+  SPIKE_STATE = 'SPIKE_STATE',
 }
 
 export enum DIRECTION_ENUM {
@@ -87,3 +89,28 @@ export enum ENTITY_TYPE_ENUM {
   DOOR = 'DOOR',
   BURST = 'BURST',
 }
+
+export enum SPIKE_STATE_ENUM {
+  ZERO = 'ZERO',
+  ONE = 'ONE',
+  TWO = 'TWO',
+  THREE = 'THREE',
+  FOUR = 'FOUR',
+  FIVE = 'FIVE',
+}
+export enum SPIKE_STATE_ORDER_ENUM {
+  ZERO = 0,
+  ONE = 1,
+  TWO = 2,
+  THREE = 3,
+  FOUR = 4,
+  FIVE = 5,
+}
+
+export enum SPIKE_TYPE_ENUM {
+  ONE = 'ONE',
+  TWO = 'TWO',
+  THREE = 'THREE',
+  FOUR = 'FOUR',
+}
+
