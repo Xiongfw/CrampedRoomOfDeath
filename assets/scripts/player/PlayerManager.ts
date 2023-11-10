@@ -217,6 +217,7 @@ export class PlayerManager extends EntityManager {
   }
 
   move(inputDirection: INPUT_DIRECTION_ENUM) {
+    EventManager.instance.emit(EVENT_ENUM.RECORD_STEP);
     switch (inputDirection) {
       case INPUT_DIRECTION_ENUM.TOP:
         this.targetY += 1;

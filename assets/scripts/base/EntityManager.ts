@@ -17,10 +17,10 @@ export class EntityManager extends Component {
   id = randomBylen(8);
   x = 0;
   y = 0;
+  type!: ENTITY_TYPE_ENUM;
   fsm!: StateMachine;
   private _direction!: DIRECTION_ENUM;
   private _state!: ENTITY_STATE_ENUM;
-  private type!: ENTITY_TYPE_ENUM;
 
   get direction() {
     return this._direction;

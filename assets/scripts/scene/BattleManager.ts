@@ -1,11 +1,17 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, director, Node } from 'cc';
 import { TiledMapManager } from '../tile/TiledMapManager';
 import { createUINode } from '../utils';
 import levels, { ILevel } from '../level';
 import { DataManager } from '../runtime/DataManager';
 import { TILE_WIDTH, TILE_HEIGHT } from '../tile/TileManager';
 import { EventManager } from '../runtime/EventManager';
-import { DIRECTION_ENUM, ENTITY_STATE_ENUM, ENTITY_TYPE_ENUM, EVENT_ENUM } from '../enum';
+import {
+  DIRECTION_ENUM,
+  ENTITY_STATE_ENUM,
+  ENTITY_TYPE_ENUM,
+  EVENT_ENUM,
+  SCENE_ENUM,
+} from '../enum';
 import { PlayerManager } from '../player/PlayerManager';
 import { WoodenSkeletonManager } from '../woodenskeleton/WoodenSkeletonManager';
 import { DoorManager } from '../door/DoorManager';
@@ -27,11 +33,23 @@ export class BattleManager extends Component {
 
     EventManager.instance.on(EVENT_ENUM.NEXT_LEVEL, this.nextLevel, this);
     EventManager.instance.on(EVENT_ENUM.PLAYER_MOVE_END, this.checkArrived, this);
+    EventManager.instance.on(EVENT_ENUM.RECORD_STEP, this.record, this);
+    EventManager.instance.on(EVENT_ENUM.REVOKE_STEP, this.revoke, this);
+    EventManager.instance.on(EVENT_ENUM.RESTART_LEVEL, this.initLevel, this);
+    EventManager.instance.on(EVENT_ENUM.OUT_BATTLE, this.outBattle, this);
   }
 
   protected onDestroy(): void {
     EventManager.instance.off(EVENT_ENUM.NEXT_LEVEL, this.nextLevel);
     EventManager.instance.off(EVENT_ENUM.PLAYER_MOVE_END, this.checkArrived);
+    EventManager.instance.off(EVENT_ENUM.RECORD_STEP, this.record);
+    EventManager.instance.off(EVENT_ENUM.REVOKE_STEP, this.revoke);
+    EventManager.instance.off(EVENT_ENUM.RESTART_LEVEL, this.initLevel);
+    EventManager.instance.off(EVENT_ENUM.OUT_BATTLE, this.outBattle);
+  }
+
+  outBattle() {
+    director.loadScene(SCENE_ENUM.START);
   }
 
   checkArrived() {
@@ -172,6 +190,72 @@ export class BattleManager extends Component {
       DataManager.instance.enemies.push(enemyManager);
     }
     await Promise.all(promiseList);
+  }
+
+  record() {
+    const { player, door, enemies, bursts } = DataManager.instance;
+    if (!player || !door) {
+      return;
+    }
+    DataManager.instance.records.push({
+      player: {
+        x: player.x,
+        y: player.y,
+        direction: player.direction,
+        type: player.type,
+        state: player.state,
+      },
+      door: {
+        x: door.x,
+        y: door.y,
+        direction: door.direction,
+        type: door.type,
+        state: player.state,
+      },
+      enemies: enemies.map((i) => ({
+        x: i.x,
+        y: i.y,
+        direction: i.direction,
+        type: i.type,
+        state: i.state,
+      })),
+      bursts: bursts.map((i) => ({
+        x: i.x,
+        y: i.y,
+        direction: i.direction,
+        type: i.type,
+        state: i.state,
+      })),
+    });
+  }
+
+  revoke() {
+    const item = DataManager.instance.records.pop();
+    if (item) {
+      DataManager.instance.player!.x = DataManager.instance.player!.targetX = item.player.x;
+      DataManager.instance.player!.y = DataManager.instance.player!.targetY = item.player.y;
+      DataManager.instance.player!.direction = item.player.direction;
+      DataManager.instance.player!.state = item.player.state;
+
+      DataManager.instance.door!.x = item.door.x;
+      DataManager.instance.door!.y = item.door.y;
+      DataManager.instance.door!.direction = item.door.direction;
+      DataManager.instance.door!.state = item.door.state;
+
+      for (let i = 0; i < item.enemies.length; i++) {
+        DataManager.instance.enemies[i].x = item.enemies[i].x;
+        DataManager.instance.enemies[i].y = item.enemies[i].y;
+        DataManager.instance.enemies[i].direction = item.enemies[i].direction;
+        DataManager.instance.enemies[i].state = item.enemies[i].state;
+      }
+
+      for (let i = 0; i < item.bursts.length; i++) {
+        DataManager.instance.bursts[i].x = item.bursts[i].x;
+        DataManager.instance.bursts[i].y = item.bursts[i].y;
+        DataManager.instance.bursts[i].direction = item.bursts[i].direction;
+        DataManager.instance.bursts[i].state = item.bursts[i].state;
+      }
+    }
   }
 
   adaptPos() {

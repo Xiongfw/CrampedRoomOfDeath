@@ -2,7 +2,7 @@ import { EnemyManager } from '../base/EnemyManager';
 import { Singleton } from '../base/Singleton';
 import { BurstManager } from '../burst/BurstManager';
 import { DoorManager } from '../door/DoorManager';
-import { ITile } from '../level/index';
+import { ILevel, ITile } from '../level/index';
 import { PlayerManager } from '../player/PlayerManager';
 import { TileManager } from '../tile/TileManager';
 
@@ -21,6 +21,7 @@ export class DataManager extends Singleton {
   bursts: BurstManager[] = [];
   // 当前关卡索引
   levelIndex: number = 1;
+  records: Omit<ILevel, 'mapInfo' | 'spikes'>[] = [];
 
   reset() {
     this.mapInfo = [];
@@ -29,6 +30,7 @@ export class DataManager extends Singleton {
     this.door = null;
     this.enemies = [];
     this.bursts = [];
+    this.records = [];
     this.mapRowCount = 0;
     this.mapColumnCount = 0;
   }
