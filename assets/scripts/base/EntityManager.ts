@@ -40,7 +40,7 @@ export class EntityManager extends Component {
     this.fsm.setParams(value, true);
   }
 
-  async init(params: IEntity) {
+  init(params: IEntity) {
     const sprite = this.addComponent(Sprite)!;
     sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 

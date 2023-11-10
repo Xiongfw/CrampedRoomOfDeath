@@ -13,6 +13,7 @@ import { IronSkeletonManager } from '../ironskeleton/IronSkeletonManager';
 import { BurstManager } from '../burst/BurstManager';
 import { SpikeManager } from '../spike/SpikeManager';
 import { SmokeManager } from '../smoke/SmokeManager';
+import { FadeManager } from '../runtime/FadeManager';
 const { ccclass } = _decorator;
 
 @ccclass('BattleManager')
@@ -43,9 +44,11 @@ export class BattleManager extends Component {
     }
   }
 
-  initLevel() {
+  async initLevel() {
     const level = levels[`level${DataManager.instance.levelIndex}`];
     if (level) {
+      await FadeManager.instance.fadeIn();
+
       this.level = level;
 
       this.clearLevel();
@@ -54,13 +57,17 @@ export class BattleManager extends Component {
       DataManager.instance.mapRowCount = this.level.mapInfo.length || 0;
       DataManager.instance.mapColumnCount = this.level.mapInfo[0].length || 0;
 
-      this.generateTiledMap();
-      this.generateEnemies();
-      this.generateDoor();
-      this.generateBurst();
-      this.generateSpike();
-      this.generateSmoke();
-      this.generatePlayer();
+      await Promise.all([
+        this.generateTiledMap(),
+        this.generateEnemies(),
+        this.generateDoor(),
+        this.generateBurst(),
+        this.generateSpike(),
+        this.generateSmoke(),
+        this.generatePlayer(),
+      ]);
+
+      await FadeManager.instance.fadeOut();
     }
   }
 
@@ -79,80 +86,92 @@ export class BattleManager extends Component {
     this.node.addChild(this.stage);
   }
 
-  generateSmoke() {
+  async generateSmoke() {
     const node = createUINode('Smoke');
+    this.stage.addChild(node);
+
     const smokeManager = node.addComponent(SmokeManager);
-    smokeManager.init({
+    await smokeManager.init({
       x: 0,
       y: 0,
       type: ENTITY_TYPE_ENUM.SMOKE,
       direction: DIRECTION_ENUM.TOP,
       state: ENTITY_STATE_ENUM.DEATH,
     });
-    this.stage.addChild(node);
   }
 
-  generateSpike() {
+  async generateSpike() {
     const { spikes } = this.level;
     for (const spike of spikes) {
       const node = createUINode('Burst');
-      const spikeManager = node.addComponent(SpikeManager);
-      spikeManager.init({ ...spike, y: -spike.y });
       this.stage.addChild(node);
+
+      const spikeManager = node.addComponent(SpikeManager);
+      await spikeManager.init({ ...spike, y: -spike.y });
     }
   }
 
-  generateDoor() {
+  async generateDoor() {
     const { door } = this.level;
     const node = createUINode('Door');
-    const doorManager = node.addComponent(DoorManager);
-    doorManager.init({ ...door, y: -door.y });
     this.stage.addChild(node);
+
+    const doorManager = node.addComponent(DoorManager);
+    await doorManager.init({ ...door, y: -door.y });
+
     DataManager.instance.door = doorManager;
   }
 
-  generateBurst() {
+  async generateBurst() {
     const { bursts } = this.level;
+    const promiseList: Promise<void>[] = [];
     for (const burst of bursts) {
       const node = createUINode('Burst');
-      const burstManager = node.addComponent(BurstManager);
-      burstManager.init({ ...burst, y: -burst.y });
-      DataManager.instance.bursts.push(burstManager);
       this.stage.addChild(node);
+
+      const burstManager = node.addComponent(BurstManager);
+      const promise = burstManager.init({ ...burst, y: -burst.y });
+      promiseList.push(promise);
+      DataManager.instance.bursts.push(burstManager);
     }
+    await Promise.all(promiseList);
   }
 
-  generateTiledMap() {
+  async generateTiledMap() {
     const tiledMap = createUINode('TiledMap');
     this.stage.addChild(tiledMap);
     const tiledMapManager = tiledMap.addComponent(TiledMapManager);
-    tiledMapManager.init();
+    await tiledMapManager.init();
 
     this.adaptPos();
   }
 
-  generatePlayer() {
+  async generatePlayer() {
     const { player } = this.level;
     const node = createUINode('Player');
-    const playerManager = node.addComponent(PlayerManager);
-    playerManager.init({ ...player, y: -player.y }).then(() => {
-      EventManager.instance.emit(EVENT_ENUM.PLAYER_BORN);
-    });
-    DataManager.instance.player = playerManager;
     this.stage.addChild(node);
+
+    const playerManager = node.addComponent(PlayerManager);
+    await playerManager.init({ ...player, y: -player.y });
+    DataManager.instance.player = playerManager;
+    EventManager.instance.emit(EVENT_ENUM.PLAYER_BORN);
   }
 
-  generateEnemies() {
+  async generateEnemies() {
     const { enemies } = this.level;
+    const promiseList: Promise<void>[] = [];
     for (const enemy of enemies) {
       const node = createUINode('Enemy');
+      this.stage.addChild(node);
+
       const enemyManager = node.addComponent(
         enemy.type === ENTITY_TYPE_ENUM.SKELETON_IRON ? IronSkeletonManager : WoodenSkeletonManager
       );
-      enemyManager.init({ ...enemy, y: -enemy.y });
+      const promise = enemyManager.init({ ...enemy, y: -enemy.y });
+      promiseList.push(promise);
       DataManager.instance.enemies.push(enemyManager);
-      this.stage.addChild(node);
     }
+    await Promise.all(promiseList);
   }
 
   adaptPos() {
