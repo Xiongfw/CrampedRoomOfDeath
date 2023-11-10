@@ -120,3 +120,9 @@ export enum SPIKE_STATE_ORDER_ENUM {
   FIVE = 5,
 }
 
+export enum SCENE_ENUM {
+  BATTLE = 'Battle',
+  LOADING = 'Loading',
+  START = 'Start',
+}
+
